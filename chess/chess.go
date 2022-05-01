@@ -12,7 +12,7 @@ type coordinates struct {
 	y int
 }
 
-func NewCoordinates(x rune, y int) (*coordinates, error) {
+func newCoordinates(x rune, y int) (*coordinates, error) {
 
 	if x != 'a' && x != 'b' && x != 'c' && x != 'd' && x != 'e' && x != 'f' && x != 'g' && x != 'h' {
 		return nil, errors.New("invalid coordinate")
@@ -37,7 +37,7 @@ func (c *coordinates) equal(compare coordinates) bool {
 }
 
 func (c *coordinates) move(x int, y int) (*coordinates, error) {
-	return NewCoordinates(rune(int(c.x)+x), c.y+y)
+	return newCoordinates(rune(int(c.x)+x), c.y+y)
 }
 
 func CanKnightAttack(white, black string) (bool, error) {
@@ -78,7 +78,7 @@ func stringToCoord(position string) (coords *coordinates, err error) {
 	yString := string(yRune)
 	y, _ := strconv.Atoi(yString)
 
-	return NewCoordinates(x, y)
+	return newCoordinates(x, y)
 }
 
 func getAllPossibleMoves(coord *coordinates) []*coordinates {
@@ -86,7 +86,7 @@ func getAllPossibleMoves(coord *coordinates) []*coordinates {
 
 	for x := -2; x <= 2; x++ {
 		for y := -2; y <= 2; y++ {
-			if Abs(x)+Abs(y) == 3 {
+			if abs(x)+abs(y) == 3 {
 				move, err := coord.move(x, y)
 				if err == nil {
 					moves = append(moves, move)
@@ -97,7 +97,7 @@ func getAllPossibleMoves(coord *coordinates) []*coordinates {
 	return moves
 }
 
-func Abs(x int) int {
+func abs(x int) int {
 	if x < 0 {
 		return -x
 	}

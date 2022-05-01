@@ -3,9 +3,7 @@ package anagram
 import "strings"
 
 func FindAnagrams(dictionary []string, word string) (result []string) {
-
 	length := len(strings.ReplaceAll(word, " ", ""))
-	result = []string{}
 	word = strings.ToLower(word)
 	for _, dictionaryWord := range dictionary {
 		tmpDictionaryWord := strings.ToLower(dictionaryWord)
