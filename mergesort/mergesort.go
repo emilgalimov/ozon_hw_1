@@ -2,14 +2,18 @@ package mergesort
 
 // MergeSort is used to sort an array of integer
 func MergeSort(input []int) []int {
-	return mergeSort(input)
+	resultChan := make(chan []int)
+	defer close(resultChan)
+	go mergeSort(input, resultChan)
+	return <-resultChan
 }
 
-func mergeSort(input []int) []int {
+func mergeSort(input []int, output chan<- []int) {
 	inputLength := len(input)
 
 	if inputLength <= 1 {
-		return input
+		output <- input
+		return
 	}
 
 	half := inputLength / 2
@@ -17,8 +21,16 @@ func mergeSort(input []int) []int {
 	left := input[0:half]
 	right := input[half:]
 
-	leftSorted := mergeSort(left)
-	rightSorted := mergeSort(right)
+	leftChan := make(chan []int)
+	defer close(leftChan)
+	rightChan := make(chan []int)
+	defer close(rightChan)
+
+	go mergeSort(left, leftChan)
+	go mergeSort(right, rightChan)
+
+	leftSorted := <-leftChan
+	rightSorted := <-rightChan
 
 	var resultArray []int
 
@@ -58,5 +70,5 @@ func mergeSort(input []int) []int {
 		ri++
 	}
 
-	return resultArray
+	output <- resultArray
 }
