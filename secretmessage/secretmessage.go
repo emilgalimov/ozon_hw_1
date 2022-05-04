@@ -11,6 +11,9 @@ type letter struct {
 
 // Decode func
 func Decode(encoded string) string {
+	if 0 == len(encoded) {
+		return ""
+	}
 
 	count := make(map[rune]letter)
 

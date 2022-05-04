@@ -2,6 +2,10 @@ package mergesort
 
 // MergeSort is used to sort an array of integer
 func MergeSort(input []int) []int {
+	if len(input) == 0 {
+		return []int{}
+	}
+
 	resultChan := make(chan []int)
 	defer close(resultChan)
 	go mergeSort(input, resultChan)

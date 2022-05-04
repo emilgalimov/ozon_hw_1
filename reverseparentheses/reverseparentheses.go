@@ -12,6 +12,10 @@ func Reverse(s string) string {
 }
 
 func reversion(s string) string {
+	if s == "" {
+		return ""
+	}
+
 	if !hasWrap(s) {
 		return s
 	}

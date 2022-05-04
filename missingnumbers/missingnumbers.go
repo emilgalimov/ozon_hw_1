@@ -1,6 +1,10 @@
 package missingnumbers
 
 func Missing(numbers []int) []int {
+	if len(numbers) == 0 {
+		return []int{1, 2}
+	}
+
 	miss := make([]int, 0, 2)
 	i := 1
 	for {
