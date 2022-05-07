@@ -32,16 +32,14 @@ func possibleRoutes(current string, needed string, dic []string) ([][]string, er
 		return nil, nil
 	}
 
-	if 0 == len(dic) {
-		return nil, errors.New("not found")
-	}
-
 	var result [][]string
 
 	for i, word := range dic {
+
 		if !isOneDifference(word, current) {
 			continue
 		}
+
 		newDict := removeIndex(dic, i)
 		newResultItems, err := possibleRoutes(word, needed, newDict)
 
@@ -54,6 +52,7 @@ func possibleRoutes(current string, needed string, dic []string) ([][]string, er
 
 		if len(newResultItems) == 0 {
 			result = append(result, resultItem)
+			continue
 		}
 
 		for _, newResultItem := range newResultItems {
@@ -69,9 +68,6 @@ func possibleRoutes(current string, needed string, dic []string) ([][]string, er
 }
 
 func isOneDifference(word1 string, word2 string) bool {
-	if len(word1) != len(word2) {
-		return false
-	}
 
 	var count int
 
